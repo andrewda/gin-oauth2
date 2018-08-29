@@ -12,6 +12,7 @@ import (
 	"net/http"
 
 	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 
@@ -34,7 +35,7 @@ type User struct {
 
 var conf *oauth2.Config
 var state string
-var store sessions.CookieStore
+var store cookie.CookieStore
 
 func randToken() string {
 	b := make([]byte, 32)
@@ -44,7 +45,7 @@ func randToken() string {
 
 // Setup the authorization path
 func Setup(config *oauth2.Config, secret []byte) {
-	store = sessions.NewCookieStore(secret)
+	store = cookie.NewStore(secret)
 	conf = config
 }
 
