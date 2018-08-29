@@ -19,12 +19,6 @@ import (
 	"golang.org/x/oauth2/google"
 )
 
-// Credentials stores google client-ids.
-type Credentials struct {
-	ClientID     string `json:"clientid"`
-	ClientSecret string `json:"secret"`
-}
-
 // User is a retrieved and authenticated user.
 type User struct {
 	Sub           string `json:"sub"`
@@ -39,7 +33,6 @@ type User struct {
 	Hd            string `json:"hd"`
 }
 
-var cred Credentials
 var conf *oauth2.Config
 var state string
 var store sessions.CookieStore
@@ -51,22 +44,9 @@ func randToken() string {
 }
 
 // Setup the authorization path
-func Setup(redirectURL, credFile string, scopes []string, secret []byte) {
+func Setup(config &oauth2.Config, secret []byte) {
 	store = sessions.NewCookieStore(secret)
-	var c Credentials
-	file, err := ioutil.ReadFile(credFile)
-	if err != nil {
-		glog.Fatalf("[Gin-OAuth] File error: %v\n", err)
-	}
-	json.Unmarshal(file, &c)
-
-	conf = &oauth2.Config{
-		ClientID:     c.ClientID,
-		ClientSecret: c.ClientSecret,
-		RedirectURL:  redirectURL,
-		Scopes:       scopes,
-		Endpoint:     google.Endpoint,
-	}
+	conf = config
 }
 
 func Session(name string) gin.HandlerFunc {
