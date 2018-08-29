@@ -16,7 +16,6 @@ import (
 	"github.com/golang/glog"
 
 	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
 )
 
 // User is a retrieved and authenticated user.
