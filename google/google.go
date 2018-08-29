@@ -44,7 +44,7 @@ func randToken() string {
 }
 
 // Setup the authorization path
-func Setup(config &oauth2.Config, secret []byte) {
+func Setup(config *oauth2.Config, secret []byte) {
 	store = sessions.NewCookieStore(secret)
 	conf = config
 }
