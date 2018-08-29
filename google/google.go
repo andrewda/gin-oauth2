@@ -35,7 +35,7 @@ type User struct {
 
 var conf *oauth2.Config
 var state string
-var store cookie.CookieStore
+var store cookie.Store
 
 func randToken() string {
 	b := make([]byte, 32)
